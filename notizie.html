@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notizie - Notizie Italiane</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .article-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .article-preview img {
+            width: 100%;
+            height: auto;
+            max-width: 402.5px; /* 350px + 15% */
+            aspect-ratio: 4 / 3;
+            object-fit: cover;
+            border-radius: 8px;
+            margin: 0 auto;
+        }
+        .article-preview {
+            background-color: #f0f0f0;
+            color: #333;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 450px;
+            margin: 0 auto;
+        }
+        .calendar-clock {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+        }
+        .calendar, .clock {
+            flex: 1;
+            background-color: #f0f0f0;
+            color: #333;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Notizie Italiane</h1>
+    </header>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="notizie.html">Notizie</a>
+        <a href="sport.html">Sport</a>
+        <a href="cultura.html">Cultura</a>
+        <a href="contatti.html">Contatti</a>
+    </nav>
+    <div class="container">
+        <div class="main-content">
+            <h2>Ultime Notizie</h2>
+            <div class="calendar-clock">
+                <div class="calendar">
+                    <h3>Calendario</h3>
+                    <p id="calendar-date"></p>
+                </div>
+                <div class="clock">
+                    <h3>Ora Esatta</h3>
+                    <p id="current-time"></p>
+                </div>
+            </div>
+            <p>Qui troverete gli ultimi aggiornamenti sulle notizie nazionali e internazionali. Rimani aggiornato con le notizie più recenti e importanti del giorno.</p>
+            <div class="article-list" id="article-list">
+                <!-- Articoli verranno caricati qui dinamicamente -->
+            </div>
+        </div>
+    </div>
+    <footer>
+    <p>&copy; 2024 Notizie Italiane</p>
+</footer>
+<script>
+    function updateCalendar() {
+        const date = new Date();
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        document.getElementById('calendar-date').textContent = date.toLocaleDateString('it-IT', options);
+    }
+
+    function updateClock() {
+        const now = new Date();
+        const timeString = now.toLocaleTimeString('it-IT');
+        document.getElementById('current-time').textContent = timeString;
+    }
+
+    updateCalendar();
+    setInterval(updateClock, 1000);
+
+    // Carica dinamicamente gli articoli
+    async function loadArticles() {
+        try {
+            const response = await fetch('articles.json');
+            const articles = await response.json();
+
+            const articleList = document.getElementById('article-list');
+
+            articles.forEach(article => {
+                const articlePreview = document.createElement('div');
+                articlePreview.className = 'article-preview';
+
+                articlePreview.innerHTML = `
+                    <a href="${article.href}">
+                        <img src="${article.imgSrc}" alt="${article.alt}">
+                        <h3>${article.title}</h3>
+                    </a>
+                `;
+
+                articleList.appendChild(articlePreview);
+            });
+        } catch (error) {
+            console.error('Errore nel caricamento degli articoli:', error);
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', loadArticles);
+</script>
+</body>
+</html>

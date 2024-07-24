@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Notizie Italiane</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .article-preview {
+            display: none;
+            text-align: center;
+            opacity: 0;
+            position: relative;
+            transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+        }
+        .article-preview.visible {
+            display: block;
+            opacity: 1;
+            transform: scale(1.05);
+        }
+        .article-preview img {
+            width: 100%;
+            height: auto;
+            aspect-ratio: 4 / 3;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .article-preview h3 {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            margin: 0;
+            font-size: 1.5em;
+            color: #fff;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            border-radius: 8px;
+        }
+        .indicators {
+            text-align: center;
+            margin-top: 10px;
+        }
+        .indicators span {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            margin: 0 5px;
+            background-color: #bbb;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .indicators span.active {
+            background-color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Notizie Italiane</h1>
+    </header>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="notizie.html">Notizie</a>
+        <a href="sport.html">Sport</a>
+        <a href="cultura.html">Cultura</a>
+        <a href="contatti.html">Contatti</a>
+    </nav>
+    <div class="container">
+        <div class="main-content">
+            <h2>Benvenuti su Notizie Italiane</h2>
+            <p class="intro-text">Qui troverete le ultime notizie, aggiornamenti sullo sport, articoli di cultura e molto altro ancora.</p>
+            <div class="article-list" id="article-list">
+                <!-- Articoli verranno caricati qui dinamicamente -->
+            </div>
+            <div class="indicators" id="indicators">
+    <!-- Indicatori verranno caricati qui dinamicamente -->
+</div>
+
+<div class="additional-text">
+    <p><strong>Non perderti</strong> le ultime novità dal mondo dello sport e della cultura. Scopri gli articoli più recenti e gli approfondimenti su temi di attualità.</p>
+    <p>Unisciti alla nostra comunità di lettori e resta aggiornato sulle notizie più importanti del giorno. Il nostro team di giornalisti è dedicato a offrirti un'informazione precisa e tempestiva.</p>
+    <p>Che tu sia interessato alla politica, all'economia, alla tecnologia o alla scienza, troverai sempre qualcosa di interessante su <strong>Notizie Italiane</strong>.</p>
+</div>
+</div>
+</div>
+<footer>
+<p>&copy; 2024 Notizie Italiane</p>
+</footer>
+<script>
+async function loadArticles() {
+try {
+    const response = await fetch('articles.json');
+    const articlesData = await response.json();
+
+    const articleList = document.getElementById('article-list');
+    const indicators = document.getElementById('indicators');
+
+    articlesData.forEach((article, index) => {
+        const articlePreview = document.createElement('div');
+        articlePreview.className = 'article-preview';
+
+        articlePreview.innerHTML = `
+            <a href="${article.href}">
+                <img src="${article.imgSrc}" alt="${article.alt}" class="notizie-img">
+                <h3>${article.title}</h3>
+            </a>
+        `;
+
+        articleList.appendChild(articlePreview);
+
+        // Aggiungi un indicatore per ogni articolo
+        const indicator = document.createElement('span');
+        indicator.setAttribute('data-index', index);
+        if (index === 0) indicator.classList.add('active');
+        indicators.appendChild(indicator);
+    });
+
+    // Inizializza la visualizzazione degli articoli
+    const articles = document.querySelectorAll('.article-preview');
+    const indicatorsSpans = document.querySelectorAll('.indicators span');
+    let currentArticle = 0;
+    const totalArticles = articles.length;
+
+    function showArticle(index) {
+        articles[currentArticle].classList.remove('visible');
+        indicatorsSpans[currentArticle].classList.remove('active');
+        currentArticle = index;
+        articles[currentArticle].classList.add('visible');
+        indicatorsSpans[currentArticle].classList.add('active');
+    }
+
+    function showNextArticle() {
+        showArticle((currentArticle + 1) % totalArticles);
+    }
+
+    indicatorsSpans.forEach((indicator, index) => {
+        indicator.addEventListener('click', () => {
+            showArticle(index);
+        });
+    });
+
+    setInterval(showNextArticle, 5000);
+    showArticle(0); // Mostra il primo articolo
+
+} catch (error) {
+    console.error('Errore nel caricamento degli articoli:', error);
+}
+}
+
+document.addEventListener('DOMContentLoaded', loadArticles);
+</script>
+</body>
+</html>

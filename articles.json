@@ -1,0 +1,44 @@
+[
+    {
+        "href": "robot-chef.html",
+        "imgSrc": "rimmagini/obotchef1.png",
+        "alt": "Robot chef in azione",
+        "title": "Nuovo <strong>Robot Chef</strong> Rivoluziona la Cucina"
+    },
+    {
+        "href": "scoperta-tesoro.html",
+        "imgSrc": "immagini/roma1.png",
+        "alt": "Scoperta del tesoro",
+        "title": "Scoperta di un Antico Tesoro nel Cuore di Roma"
+    },
+    {
+        "href": "nuovo-pianeta.html",
+        "imgSrc": "immagini/pianeta1.png",
+        "alt": "Nuovo pianeta",
+        "title": "<strong>Scoperta</strong> di un Nuovo Pianeta Abitabile"
+    },
+    {
+        "href": "droni-agricoli.html",
+        "imgSrc": "immagini/droni1.png",
+        "alt": "Drone in volo su campi agricoli",
+        "title": "La Rivoluzione dei <strong>Droni Agricoli</strong>"
+    },
+    {
+        "href": "nuova-farfalla.html",
+        "imgSrc": "immagini/farfa1.png",
+        "alt": "Nuova specie di farfalla",
+        "title": "Scoperta di una Nuova Specie di <strong>Farfalla</strong> in Amazzonia"
+    },
+    {
+        "href": "pizza.html",
+        "imgSrc": "immagini/pizza1.png",
+        "alt": "Pizza gigante",
+        "title": "La <strong>Pizza</strong> Più Grande del Mondo"
+    },
+    {
+        "href": "new_story_article_2.html",
+        "imgSrc": "immagini/1.png",
+        "alt": "Spiaggia serena",
+        "title": "Vacanza da <strong>Sogno</strong>: Un Paradiso Tropicale"
+    }
+]
